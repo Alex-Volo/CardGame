@@ -1,0 +1,21 @@
+body {
+    background-color: #004980;
+}
+
+.app-container{
+    // box-sizing: border-box;
+    padding-left: calc(50% - 512px);
+    padding-right: calc(50% - 512px);
+    // padding-top: calc(50% - 387px);
+    // padding-bottom: calc(50% - 387px);
+    background-color: #fff;
+    max-width: 1024px;
+    max-height: 774px;
+}
+.difficulty {
+    margin: auto auto;
+    width: 480px;
+    height: 459px;
+    background-color: #C2F5FF;
+    border-radius: 12px;
+}
