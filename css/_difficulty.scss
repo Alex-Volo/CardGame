@@ -43,6 +43,11 @@
                 color:#0071a9;
                 background-color: #e6e6e6;
             }
+
+            &_checked {
+                transform: scale(1.1);
+                outline-color: #0071a9;
+            }
         }
     }
 }

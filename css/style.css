@@ -92,4 +92,8 @@ body {
 .difficulty__selection-item:active {
   color: #0071a9;
   background-color: #e6e6e6;
+}
+.difficulty__selection-item_checked {
+  transform: scale(1.1);
+  outline-color: #0071a9;
 }/*# sourceMappingURL=style.css.map */
