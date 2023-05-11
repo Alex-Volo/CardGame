@@ -1,5 +1,5 @@
 "use strict"
-
+localStorage.setItem('CardGame_status', 'difficulty')
 function renderApp(mode = "difficulty") {
     const appElem = document.querySelector('.app-container')
 
@@ -26,4 +26,4 @@ function renderApp(mode = "difficulty") {
     }
 }
 
-renderApp();
+renderApp(localStorage.getItem('CardGame_status'));
