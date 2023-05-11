@@ -1,5 +1,5 @@
 "use strict"
-localStorage.setItem('CardGame_status', 'difficulty')
+
 function renderApp(mode = "difficulty") {
     const appElem = document.querySelector('.app-container')
 
@@ -17,13 +17,6 @@ function renderApp(mode = "difficulty") {
                 </div>
             `
     }
-    const difficultyButtons = document.querySelectorAll('.difficulty__selection-item');
-    for(let button of difficultyButtons){
-        button.addEventListener('click', () => {
-            difficultyButtons.forEach((el) => el.classList.remove('difficulty__selection-item_checked'));
-            button.classList.add('difficulty__selection-item_checked')
-        })
-    }
 }
 
-renderApp(localStorage.getItem('CardGame_status'));
+renderApp();
