@@ -16,7 +16,18 @@ function renderApp(mode = 0) {
         case 'game':
             appElem.style.flexDirection = 'column';
             appElem.innerHTML = `
-            <p>Игра</p>
+            <div class="game">
+                <div class="game__header">
+                    <div class="game__timer">
+                        <div class="game__min-sec">min</div>
+                        <div class="game__min-sec">sec</div>
+                        <div class="game__digits">00.00</div>
+                    </div>
+                    <button class="btn">Начать заново</button>
+                </div>
+                <div class="game__field">
+                </div>
+            </div>
             <p>Сложность ${localStorage.getItem('CardGame_difficulty')}</p>
             <button class="btn">Назад</button>
             `;

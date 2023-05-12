@@ -1,0 +1,31 @@
+.game {
+    box-sizing: border-box;
+    width: 698px;
+    padding: 1.5rem;
+    color: #FFF;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__timer {
+        display: grid;
+        justify-items: end;
+        grid-template-columns: 70px 70px;
+        column-gap: 1rem;
+        row-gap: 0;
+    }
+
+    &__min-sec {
+
+        font-size: 1rem;
+    }
+
+    &__digits {
+        grid-column: 1 / -1;
+        font-size: 64px;
+        line-height: 72px;
+    }
+}
