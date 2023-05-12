@@ -1,8 +1,7 @@
 "use strict"
 import { Deck } from "./js/deck.js";
-let koloda = new Deck;
-console.log(koloda.shuffle().shuffle());
-console.log(koloda.shuffle().cut(6).double().shuffle());
+import { renderGameField } from "./js/game.js";
+
 
 function renderApp(mode = 0) {
     const appElem = document.querySelector('.app-container')
@@ -38,6 +37,7 @@ function renderApp(mode = 0) {
                 localStorage.removeItem('CardGame_status');
                 renderApp(localStorage.getItem('CardGame_status'));
             })
+            renderGameField(localStorage.getItem('CardGame_difficulty'));
             break;
 
         default:

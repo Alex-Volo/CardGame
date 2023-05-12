@@ -112,7 +112,7 @@ body {
 .game__timer {
   display: grid;
   justify-items: end;
-  grid-template-columns: 70px 70px;
+  grid-template-columns: 68px 68px;
   -moz-column-gap: 1rem;
        column-gap: 1rem;
   row-gap: 0;
@@ -124,4 +124,37 @@ body {
   grid-column: 1/-1;
   font-size: 64px;
   line-height: 72px;
+}
+.game__field {
+  margin-top: 35px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, 95px);
+}
+.game__card {
+  position: relative;
+  width: 95px;
+  height: 133px;
+  border-radius: 0.25rem;
+  background-color: #FFF;
+  color: black;
+}
+.game__card::before, .game__card::after {
+  height: 2rem;
+  display: inline-block;
+  content: attr(data-value);
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  font-family: stratosskyengweb;
+  position: absolute;
+}
+.game__card::before {
+  top: 4px;
+  left: 6px;
+}
+.game__card::after {
+  bottom: 4px;
+  right: 6px;
+  transform: rotate(180deg);
 }/*# sourceMappingURL=style.css.map */
