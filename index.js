@@ -1,15 +1,19 @@
 "use strict"
+import { Deck } from "./js/deck.js";
+let koloda = new Deck;
+console.log(koloda.shuffle().shuffle());
+console.log(koloda.shuffle().cut(6).double().shuffle());
 
 function renderApp(mode = 0) {
     const appElem = document.querySelector('.app-container')
 
     switch (mode) {
 
-        case 'result': 
+        case 'result':
             appElem.innerHTML = appElem.innerHTML + ``;
             break;
-        
-        case 'game': 
+
+        case 'game':
             appElem.style.flexDirection = 'column';
             appElem.innerHTML = `
             <p>Игра</p>
@@ -19,10 +23,10 @@ function renderApp(mode = 0) {
 
             const backBtn = appElem.querySelector('.btn');
             backBtn.addEventListener('click', () => {
-            console.log('Старт')
-            localStorage.removeItem('CardGame_status');
-            renderApp(localStorage.getItem('CardGame_status'));
-        })
+                console.log('Старт')
+                localStorage.removeItem('CardGame_status');
+                renderApp(localStorage.getItem('CardGame_status'));
+            })
             break;
 
         default:
@@ -38,23 +42,23 @@ function renderApp(mode = 0) {
                 </div>
             `;
 
-        const difficultyButtons = appElem.querySelectorAll('.difficulty__selection-item');
-        localStorage.setItem('CardGame_difficulty', '1');
-        
-        for(let button of difficultyButtons){
-            button.addEventListener('click', () => {
-                difficultyButtons.forEach((el) => el.classList.remove('difficulty__selection-item_checked'));
-                button.classList.add('difficulty__selection-item_checked');
-                localStorage.setItem('CardGame_difficulty', button.textContent);
-            })
-        }
+            const difficultyButtons = appElem.querySelectorAll('.difficulty__selection-item');
+            localStorage.setItem('CardGame_difficulty', '1');
 
-        const startBtn = appElem.querySelector('.start-button');
-        startBtn.addEventListener('click', () => {
-            console.log('Старт')
-            localStorage.setItem('CardGame_status', 'game');
-            renderApp(localStorage.getItem('CardGame_status'));
-        })
+            for (let button of difficultyButtons) {
+                button.addEventListener('click', () => {
+                    difficultyButtons.forEach((el) => el.classList.remove('difficulty__selection-item_checked'));
+                    button.classList.add('difficulty__selection-item_checked');
+                    localStorage.setItem('CardGame_difficulty', button.textContent);
+                })
+            }
+
+            const startBtn = appElem.querySelector('.start-button');
+            startBtn.addEventListener('click', () => {
+                console.log('Старт')
+                localStorage.setItem('CardGame_status', 'game');
+                renderApp(localStorage.getItem('CardGame_status'));
+            })
     }
 }
 
