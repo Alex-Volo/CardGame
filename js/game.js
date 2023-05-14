@@ -13,6 +13,7 @@ export function renderGameField(difficulty = 1) {
             deck.shuffle().cut(3).double().shuffle();
             renderCards(deck);
             addCardListener()
+            setTimeout(flipCards, 5000)
             break;
         
         case '2':
@@ -51,12 +52,32 @@ function renderCards(deck) {
         `
     }
 }
+
 function addCardListener() {
     const cards = document.body.querySelectorAll('.card');
 
     for (let card of cards) {
         card.addEventListener('click', () => {
+            const face = card.querySelector('.card__face');
+            const back = card.querySelector('.card__back');
+
+            face.classList.remove('card__flip-face');
+            back.classList.remove('card__flip-back');
             console.log('Карта');
         })
+    }
+}
+
+function flipCards() {
+    const cards = document.body.querySelectorAll('.card');
+    
+    for (let card of cards) {
+        const face = card.querySelector('.card__face');
+        const back = card.querySelector('.card__back');
+
+        face.classList.add('card__flip-face');
+        back.classList.add('card__flip-back');
+        
+        
     }
 }

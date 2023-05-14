@@ -162,12 +162,12 @@ body {
   transform: perspective(600px) rotateY(180deg);
   backface-visibility: hidden;
 }
-.card:hover > .card__back {
+.card__flip-back {
   transition: all 1s;
   backface-visibility: hidden;
   transform: perspective(600px) rotateY(0deg);
 }
-.card:hover > .card__face {
+.card__flip-face {
   transition: all 1s;
   backface-visibility: hidden;
   transform: perspective(600px) rotateY(-180deg);
