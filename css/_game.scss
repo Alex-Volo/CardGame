@@ -35,36 +35,73 @@
         gap: 1rem;
         grid-template-columns: repeat(auto-fit, 95px);
     }
+}
+.card {
+    width: 95px;
+    height: 133px;
+    color: black;
+    letter-spacing: -4px;
+    transition: all 1s;
+    position: relative;
 
-    &__card {
-        position: relative;
+    &__face {
+        border-radius: .25rem;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 6px;
+        background-color: #FFF;
+    }
+    &__back {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 95px;
         height: 133px;
-        border-radius: .25rem;
-        background-color: #FFF;
-        color: black;
+        background: url(../img/back.png);
+        transform: perspective(600px) rotateY(180deg);
+        backface-visibility: hidden;
+    }
 
-        &::before, &::after {
-            height: 2rem;
-            display: inline-block;
-            content: attr(data-value);
-            box-sizing: border-box;
-            font-size: 1.5rem;
-            line-height: 1.5rem;
-            font-family: stratosskyengweb;
-            position: absolute;
-        }
+    &:hover>.card__back {
+        transition: all 1s;
+        backface-visibility: hidden;
+        transform: perspective(600px) rotateY(0deg);
+    }
 
-        &::before {
-            top: 4px;
-            left: 6px;
+    &:hover>.card__face {
+            transition: all 1s;
+            backface-visibility: hidden;
+            transform: perspective(600px) rotateY(-180deg);
+    }
 
-        }
+   
+    
 
-        &::after {
-            bottom: 4px;
-            right: 6px;
-            transform: rotate(180deg);
-        }
+    &__top {
+        width: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__bottom {
+        transform: rotate(180deg);
+    }
+
+    &__value {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
+    
+    &__suit {
+        margin-left: 3px;
+        display: block;
+        width: 10px;
+        height: 10px;
     }
 }
