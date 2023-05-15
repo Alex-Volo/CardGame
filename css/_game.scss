@@ -1,3 +1,4 @@
+
 .game {
     box-sizing: border-box;
     width: 698px;
@@ -18,6 +19,11 @@
         row-gap: 0;
     }
 
+    &__countdown {
+        font-size: 5rem;
+        line-height: 0;
+    }
+
     &__min-sec {
 
         font-size: 1rem;
@@ -25,8 +31,8 @@
 
     &__digits {
         grid-column: 1 / -1;
-        font-size: 64px;
-        line-height: 72px;
+        font-size: 4rem;
+        line-height: 4.5rem;
     }
 
     &__field {
@@ -36,6 +42,7 @@
         grid-template-columns: repeat(auto-fit, 95px);
     }
 }
+
 .card {
     width: 95px;
     height: 133px;
@@ -43,6 +50,7 @@
     letter-spacing: -4px;
     transition: all 1s;
     position: relative;
+    cursor: pointer;
 
     &__face {
         border-radius: .25rem;
@@ -55,6 +63,7 @@
         padding: 6px;
         background-color: #FFF;
     }
+
     &__back {
         z-index: 1;
         position: absolute;
@@ -79,20 +88,32 @@
     //         transform: perspective(600px) rotateY(-180deg);
     // }
 
-   &__flip{
-    &-back{
-        transition: all 1s;
-        backface-visibility: hidden;
-        transform: perspective(600px) rotateY(0deg);
+    &__flip {
+        &-back {
+            transition: all 1s;
+            backface-visibility: hidden;
+            transform: perspective(600px) rotateY(0deg);
+
+            &1 {
+                transition: all 1s;
+                backface-visibility: hidden;
+                transform: perspective(600px) rotateY(180deg);
+            }
+        }
+
+        &-face {
+            transition: all 1s;
+            backface-visibility: hidden;
+            transform: perspective(600px) rotateY(-180deg);
+
+            &1 {
+                transition: all 1s;
+                backface-visibility: hidden;
+                transform: perspective(600px) rotateY(0deg);
+            }
+        }
     }
 
-    &-face{
-        transition: all 1s;
-        backface-visibility: hidden;
-        transform: perspective(600px) rotateY(-180deg);
-    }
-   }
-    
 
     &__top {
         width: 12px;
@@ -109,7 +130,7 @@
         font-size: 1.5rem;
         line-height: 1.5rem;
     }
-    
+
     &__suit {
         margin-left: 3px;
         display: block;

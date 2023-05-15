@@ -5,28 +5,27 @@ const suitsBackground = {
     '♥': 'hearts.svg', 
     '♦': 'diamonds.svg',
 }
+
+let firstCard = {
+    value: 0,
+    suit: 0,
+};
+
+let secondCard = {
+    value: 0,
+    suit: 0,
+};
+
 export function renderGameField(difficulty = 1) {
     const deck = new Deck;
+    const cardPresets = [3, 3, 6, 9];
+    window.cardGame.currentDeck = deck.shuffle().cut(cardPresets[+difficulty]).double().shuffle();
 
-    switch (difficulty) {
-        case '1': 
-            deck.shuffle().cut(3).double().shuffle();
-            renderCards(deck);
-            addCardListener()
-            setTimeout(flipCards, 5000)
-            break;
-        
-        case '2':
-            deck.shuffle().cut(6).double().shuffle();
-            renderCards(deck);
-            addCardListener()
-            break;
-
-        case '3':
-            deck.shuffle().cut(9).double().shuffle();
-            renderCards(deck);
-            addCardListener()
-    }
+        renderCards(deck);
+        setTimeout(() => {
+            flipCards();
+            addCardListener()}, 5000);
+        countdown();
 }
 
 function renderCards(deck) {
@@ -55,15 +54,36 @@ function renderCards(deck) {
 
 function addCardListener() {
     const cards = document.body.querySelectorAll('.card');
-
+    const resetCard = () => {
+        return {value: 0, suit: 0}
+        };
+    
     for (let card of cards) {
         card.addEventListener('click', () => {
             const face = card.querySelector('.card__face');
             const back = card.querySelector('.card__back');
 
-            face.classList.remove('card__flip-face');
-            back.classList.remove('card__flip-back');
-            console.log('Карта');
+            face.classList.add('card__flip-face1');
+            back.classList.add('card__flip-back1');
+
+            if(!firstCard.value){
+                firstCard = {
+                    value: card.dataset.value,
+                    suit: card.dataset.suit
+                };
+            } else {
+                secondCard = {
+                    value: card.dataset.value,
+                    suit: card.dataset.suit
+                };
+                if(firstCard.value !== secondCard.value || firstCard.suit !== secondCard.suit) {
+                    console.log('Игра закончилась')
+                }
+                firstCard = resetCard();
+                secondCard = resetCard();
+                
+            }
+            
         })
     }
 }
@@ -77,7 +97,22 @@ function flipCards() {
 
         face.classList.add('card__flip-face');
         back.classList.add('card__flip-back');
-        
-        
     }
+}
+
+function countdown() {
+    const timer = document.querySelector('.game__timer');
+    const countdownEl = document.createElement('div');
+    countdownEl.classList.add('game__countdown');
+    countdownEl.textContent = '5';
+    timer.after(countdownEl);
+    const countdownInterval = setInterval(() => {
+        if(countdownEl.textContent > 0){
+        countdownEl.textContent -= 1;
+        } else {
+            clearInterval(countdownInterval);
+            countdownEl.textContent = '';
+        }
+    }, 1000);
+    
 }
