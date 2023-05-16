@@ -1,17 +1,17 @@
 /* eslint-disable no-case-declarations */
-import { renderGameField } from './js/game.js'
-window.cardGame = {}
+import { renderGameField } from './js/game.js';
+window.cardGame = {};
 
 function renderApp(mode = 0) {
-    const appElem = document.querySelector('.app-container')
+    const appElem = document.querySelector('.app-container');
 
     switch (mode) {
         case 'result':
-            appElem.innerHTML = appElem.innerHTML + ``
-            break
+            appElem.innerHTML = appElem.innerHTML + ``;
+            break;
 
         case 'game':
-            appElem.style.flexDirection = 'column'
+            appElem.style.flexDirection = 'column';
             appElem.innerHTML = `
             <div class="game">
                 <div class="game__header">
@@ -27,16 +27,16 @@ function renderApp(mode = 0) {
             </div>
             <p>Сложность ${window.cardGame.difficulty}</p>
             <button class="btn back_btn">Назад</button>
-            `
+            `;
 
-            const backBtn = appElem.querySelector('.back_btn')
+            const backBtn = appElem.querySelector('.back_btn');
             backBtn.addEventListener('click', () => {
-                window.cardGame.status = null
-                renderApp(window.cardGame.status)
-            })
+                window.cardGame.status = null;
+                renderApp(window.cardGame.status);
+            });
 
-            renderGameField(window.cardGame.difficulty)
-            break
+            renderGameField(window.cardGame.difficulty);
+            break;
 
         default:
             appElem.innerHTML = `
@@ -49,12 +49,12 @@ function renderApp(mode = 0) {
                     </div>
                     <button class="btn start-button">Старт</button>
                 </div>
-            `
+            `;
 
             const difficultyButtons = appElem.querySelectorAll(
                 '.difficulty__selection-item'
-            )
-            window.cardGame.difficulty = '1'
+            );
+            window.cardGame.difficulty = '1';
 
             for (let button of difficultyButtons) {
                 button.addEventListener('click', () => {
@@ -62,18 +62,18 @@ function renderApp(mode = 0) {
                         el.classList.remove(
                             'difficulty__selection-item_checked'
                         )
-                    )
-                    button.classList.add('difficulty__selection-item_checked')
-                    window.cardGame.difficulty = button.textContent
-                })
+                    );
+                    button.classList.add('difficulty__selection-item_checked');
+                    window.cardGame.difficulty = button.textContent;
+                });
             }
 
-            const startBtn = appElem.querySelector('.start-button')
+            const startBtn = appElem.querySelector('.start-button');
             startBtn.addEventListener('click', () => {
-                window.cardGame.status = 'game'
-                renderApp(window.cardGame.status)
-            })
+                window.cardGame.status = 'game';
+                renderApp(window.cardGame.status);
+            });
     }
 }
 
-renderApp(window.cardGame.status)
+renderApp(window.cardGame.status);
