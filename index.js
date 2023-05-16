@@ -1,28 +1,41 @@
-"use strict"
+/* eslint-disable no-case-declarations */
+import { renderGameField } from './js/game.js';
+window.cardGame = {};
 
 function renderApp(mode = 0) {
-    const appElem = document.querySelector('.app-container')
+    const appElem = document.querySelector('.app-container');
 
     switch (mode) {
-
-        case 'result': 
+        case 'result':
             appElem.innerHTML = appElem.innerHTML + ``;
             break;
-        
-        case 'game': 
+
+        case 'game':
             appElem.style.flexDirection = 'column';
             appElem.innerHTML = `
-            <p>Игра</p>
-            <p>Сложность ${localStorage.getItem('CardGame_difficulty')}</p>
-            <button class="btn">Назад</button>
+            <div class="game">
+                <div class="game__header">
+                    <div class="game__timer">
+                        <div class="game__min-sec">min</div>
+                        <div class="game__min-sec">sec</div>
+                        <div class="game__digits">00.00</div>
+                    </div>
+                    <button class="btn">Начать заново</button>
+                </div>
+                <div class="game__field">
+                </div>
+            </div>
+            <p>Сложность ${window.cardGame.difficulty}</p>
+            <button class="btn back_btn">Назад</button>
             `;
 
-            const backBtn = appElem.querySelector('.btn');
+            const backBtn = appElem.querySelector('.back_btn');
             backBtn.addEventListener('click', () => {
-            console.log('Старт')
-            localStorage.removeItem('CardGame_status');
-            renderApp(localStorage.getItem('CardGame_status'));
-        })
+                window.cardGame.status = null;
+                renderApp(window.cardGame.status);
+            });
+
+            renderGameField(window.cardGame.difficulty);
             break;
 
         default:
@@ -38,25 +51,29 @@ function renderApp(mode = 0) {
                 </div>
             `;
 
-        const difficultyButtons = appElem.querySelectorAll('.difficulty__selection-item');
-        localStorage.setItem('CardGame_difficulty', '1');
-        
-        for(let button of difficultyButtons){
-            button.addEventListener('click', () => {
-                difficultyButtons.forEach((el) => el.classList.remove('difficulty__selection-item_checked'));
-                button.classList.add('difficulty__selection-item_checked');
-                localStorage.setItem('CardGame_difficulty', button.textContent);
-            })
-        }
+            const difficultyButtons = appElem.querySelectorAll(
+                '.difficulty__selection-item'
+            );
+            window.cardGame.difficulty = '1';
 
-        const startBtn = appElem.querySelector('.start-button');
-        startBtn.addEventListener('click', () => {
-            console.log('Старт')
-            localStorage.setItem('CardGame_status', 'game');
-            renderApp(localStorage.getItem('CardGame_status'));
-        })
+            for (let button of difficultyButtons) {
+                button.addEventListener('click', () => {
+                    difficultyButtons.forEach((el) =>
+                        el.classList.remove(
+                            'difficulty__selection-item_checked'
+                        )
+                    );
+                    button.classList.add('difficulty__selection-item_checked');
+                    window.cardGame.difficulty = button.textContent;
+                });
+            }
+
+            const startBtn = appElem.querySelector('.start-button');
+            startBtn.addEventListener('click', () => {
+                window.cardGame.status = 'game';
+                renderApp(window.cardGame.status);
+            });
     }
 }
 
-
-renderApp(localStorage.getItem('CardGame_status'));
+renderApp(window.cardGame.status);
