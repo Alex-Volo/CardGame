@@ -74,18 +74,6 @@
         backface-visibility: hidden;
     }
 
-    // &:hover>.card__back {
-    //     transition: all 1s;
-    //     backface-visibility: hidden;
-    //     transform: perspective(600px) rotateY(0deg);
-    // }
-
-    // &:hover>.card__face {
-    //         transition: all 1s;
-    //         backface-visibility: hidden;
-    //         transform: perspective(600px) rotateY(-180deg);
-    // }
-
     &__flip {
         &-back {
             transition: all 1s;
