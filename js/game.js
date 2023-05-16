@@ -121,11 +121,12 @@ function countdown() {
     countdownEl.textContent = '5';
     timer.after(countdownEl);
     const countdownInterval = setInterval(() => {
-        if (countdownEl.textContent > 0) {
+        if (countdownEl.textContent > 1) {
             countdownEl.textContent -= 1;
         } else {
             clearInterval(countdownInterval);
-            countdownEl.textContent = '';
+            countdownEl.textContent = 'Start';
+            setTimeout(() => (countdownEl.textContent = ''), 1000);
             startTimer();
         }
     }, 1000);
@@ -133,13 +134,14 @@ function countdown() {
 
 function startTimer() {
     const timerDigits = document.querySelector('.game__digits');
-    const time = 0;
+    let time = 0;
 
     function setTime() {
-        const minutes = ('0' + Math.round(time / 60)).slice(0, -2);
-        const seconds = ('0' + (time % 60)).slice(0, -2);
+        time += 1;
+        const minutes = ('00' + Math.round(time / 60)).slice(-2);
+        const seconds = ('00' + (time % 60)).slice(-2);
         timerDigits.textContent = `${minutes}.${seconds}`;
     }
     const timerInterval = setInterval(setTime, 1000);
-    clearInterval(timerInterval);
+    setTimeout(clearInterval, 10000, timerInterval);
 }
