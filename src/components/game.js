@@ -148,6 +148,6 @@ function startTimer() {
         const seconds = ('00' + (time % 60)).slice(-2);
         timerDigits.textContent = `${minutes}.${seconds}`;
     }
-    const timerInterval = setInterval(setTime, 1000);
-    setTimeout(clearInterval, 10000, timerInterval);
+    window.cardGame.timerInterval = setInterval(setTime, 1000);
+    setTimeout(clearInterval, 10000, window.cardGame.timerInterval);
 }
