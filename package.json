@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "prepare": "husky install",
-        "lint:css": "stylelint ./css/**/*.css",
-        "lint:js": "eslint ./**/*.js",
+        "lint:css": "stylelint ./src/css/**/*.css --fix",
+        "lint:js": "eslint ./src/**/*.js --fix",
         "format": "prettier --write .",
         "lint": "npm run lint:js && npm run lint:css"
     },

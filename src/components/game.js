@@ -42,20 +42,20 @@ function renderCards(deck) {
         
         <div data-value=${card.value} data-suit=${card.suit} class="card" >
             <div class="card__back"></div>
-            <div class="card__face" style="background: url(./img/${
+            <div class="card__face" style="background: url(./src/img/${
                 suitsBackground[card.suit]
             }) center center no-repeat, rgb(255, 255, 255);">
                 <div class="card__top">    
                     <div class="card__value">${card.value}
                     </div>
-                    <img class="card__suit" src="img/${
+                    <img class="card__suit" src="./src/img/${
                         suitsBackground[card.suit]
                     }" alt="suit">
                 </div>
                 <div class="card__bottom">    
                     <div class="card__value">${card.value}
                     </div>
-                    <img class="card__suit" src="img/${
+                    <img class="card__suit" src="./src/img/${
                         suitsBackground[card.suit]
                     }" alt="suit">
                 </div>
@@ -72,33 +72,38 @@ function addCardListener() {
     };
 
     for (let card of cards) {
-        card.addEventListener('click', () => {
-            const face = card.querySelector('.card__face');
-            const back = card.querySelector('.card__back');
+        card.addEventListener('click', compareCards);
+    }
 
-            face.classList.add('card__flip-face1');
-            back.classList.add('card__flip-back1');
+    function compareCards(event) {
+        const card = event.srcElement.closest('.card');
+        const face = card.querySelector('.card__face');
+        const back = card.querySelector('.card__back');
 
-            if (!firstCard.value) {
-                firstCard = {
-                    value: card.dataset.value,
-                    suit: card.dataset.suit,
-                };
-            } else {
-                secondCard = {
-                    value: card.dataset.value,
-                    suit: card.dataset.suit,
-                };
-                if (
-                    firstCard.value !== secondCard.value ||
-                    firstCard.suit !== secondCard.suit
-                ) {
-                    console.log('Игра закончилась');
-                }
-                firstCard = resetCard();
-                secondCard = resetCard();
+        face.classList.add('card__flip-face1');
+        back.classList.add('card__flip-back1');
+
+        if (!firstCard.value) {
+            firstCard = {
+                value: card.dataset.value,
+                suit: card.dataset.suit,
+            };
+            card.removeEventListener('click', compareCards);
+        } else {
+            secondCard = {
+                value: card.dataset.value,
+                suit: card.dataset.suit,
+            };
+            card.removeEventListener('click', compareCards);
+            if (
+                firstCard.value !== secondCard.value ||
+                firstCard.suit !== secondCard.suit
+            ) {
+                console.log('Игра закончилась');
             }
-        });
+            firstCard = resetCard();
+            secondCard = resetCard();
+        }
     }
 }
 

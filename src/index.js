@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { renderGameField } from './js/game.js';
+import { renderGameField } from './components/game.js';
 window.cardGame = {};
 
 function renderApp(mode = 0) {
