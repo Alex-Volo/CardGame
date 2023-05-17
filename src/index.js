@@ -20,7 +20,7 @@ function renderApp(mode = 0) {
                         <div class="game__min-sec">sec</div>
                         <div class="game__digits">00.00</div>
                     </div>
-                    <button class="btn">Начать заново</button>
+                    <button class="btn again_btn">Начать заново</button>
                 </div>
                 <div class="game__field">
                 </div>
@@ -32,6 +32,11 @@ function renderApp(mode = 0) {
             const backBtn = appElem.querySelector('.back_btn');
             backBtn.addEventListener('click', () => {
                 window.cardGame.status = null;
+                renderApp(window.cardGame.status);
+            });
+
+            const againBtn = appElem.querySelector('.again_btn');
+            againBtn.addEventListener('click', () => {
                 renderApp(window.cardGame.status);
             });
 

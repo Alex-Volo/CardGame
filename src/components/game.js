@@ -35,11 +35,12 @@ export function renderGameField(difficulty = 1) {
 
 function renderCards(deck) {
     const gameField = document.querySelector('.game__field');
+    gameField.innerHTML = '';
+
     for (let card of deck.cards) {
         gameField.innerHTML =
             gameField.innerHTML +
-            `
-        
+            `        
         <div data-value=${card.value} data-suit=${card.suit} class="card" >
             <div class="card__back"></div>
             <div class="card__face" style="background: url(./src/img/${
