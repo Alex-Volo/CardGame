@@ -17,6 +17,10 @@ let secondCard = {
 };
 
 export function renderGameField(difficulty = 1) {
+    clearInterval(window.cardGame.timerInterval);
+    clearInterval(window.cardGame.countdownInterval);
+    clearTimeout(window.cardGame.flipTimeout);
+
     const deck = new Deck();
     const cardPresets = [3, 3, 6, 9];
     window.cardGame.currentDeck = deck
@@ -26,7 +30,7 @@ export function renderGameField(difficulty = 1) {
         .shuffle();
 
     renderCards(deck);
-    setTimeout(() => {
+    window.cardGame.flipTimeout = setTimeout(() => {
         flipCards();
         addCardListener();
     }, 5000);
@@ -126,11 +130,11 @@ function countdown() {
     countdownEl.classList.add('game__countdown');
     countdownEl.textContent = '5';
     timer.after(countdownEl);
-    const countdownInterval = setInterval(() => {
+    window.cardGame.countdownInterval = setInterval(() => {
         if (countdownEl.textContent > 1) {
             countdownEl.textContent -= 1;
         } else {
-            clearInterval(countdownInterval);
+            clearInterval(window.cardGame.countdownInterval);
             countdownEl.textContent = 'Start';
             setTimeout(() => (countdownEl.textContent = ''), 1000);
             startTimer();

@@ -37,7 +37,6 @@ function renderApp(mode = 0) {
 
             const againBtn = appElem.querySelector('.again_btn');
             againBtn.addEventListener('click', () => {
-                clearInterval(window.cardGame.timerInterval);
                 renderApp(window.cardGame.status);
             });
 
