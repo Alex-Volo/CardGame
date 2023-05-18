@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack",
-        "start": "webpack-dev-server --open",
+        "start": "webpack-dev-server --mode development --open",
         "prepare": "husky install",
         "lint:css": "stylelint ./src/css/**/*.css --fix",
         "lint:js": "eslint ./src/**/*.js --fix",
@@ -16,11 +16,13 @@
     "license": "ISC",
     "devDependencies": {
         "css-loader": "^6.7.3",
+        "css-minimizer-webpack-plugin": "^5.0.0",
         "eslint": "^8.40.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-prettier": "^4.2.1",
         "html-webpack-plugin": "^5.5.1",
         "husky": "^8.0.3",
+        "mini-css-extract-plugin": "^2.7.5",
         "prettier": "^2.0.0",
         "style-loader": "^3.3.2",
         "stylelint": "^14.8.2",

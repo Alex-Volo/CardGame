@@ -2,16 +2,15 @@
 import { renderGameField } from './components/game.js';
 require('./css/style.css');
 import './img/back.png';
-
-import './img/loose.png';
-
-import './img/win.png';
+import looseImg from './img/loose.png';
+import winImg from './img/win.png';
+// import hearts from '../img/hearts.svg';
 window.cardGame = {};
 
 const appElem = document.querySelector('.app-container');
 const winOrLooseUrl = {
-    выиграли: 'win.png',
-    проиграли: 'loose.png',
+    выиграли: winImg,
+    проиграли: looseImg,
 };
 
 export function renderApp(mode = 0, timerValue = 0, resultWord) {
@@ -21,7 +20,7 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
                 appElem.innerHTML +
                 `<div class="shadow"></div>
                 <div class="difficulty result">
-                    <img src="./src/img/${winOrLooseUrl[resultWord]}" alt="result" class="result__img">
+                    <img src="${winOrLooseUrl[resultWord]}" alt="result" class="result__img">
                     <h1 class="result__heading">Вы ${resultWord}!</h1>
                     <p class="result__text">Затраченное время:</p>
                     <p class="result__time">${timerValue}</p>
