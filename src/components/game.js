@@ -105,8 +105,12 @@ function addCardListener() {
                 firstCard.value !== secondCard.value ||
                 firstCard.suit !== secondCard.suit
             ) {
+                clearInterval(window.cardGame.timerInterval);
+                const timerValue =
+                    document.querySelector('.game__digits').textContent;
+                console.log(timerValue);
                 window.cardGame.status = 'result';
-                renderApp(window.cardGame.status);
+                renderApp(window.cardGame.status, timerValue);
             }
             firstCard = resetCard();
             secondCard = resetCard();
@@ -155,5 +159,5 @@ function startTimer() {
         timerDigits.textContent = `${minutes}.${seconds}`;
     }
     window.cardGame.timerInterval = setInterval(setTime, 1000);
-    setTimeout(clearInterval, 10000, window.cardGame.timerInterval);
+    setTimeout(clearInterval, 600000, window.cardGame.timerInterval);
 }

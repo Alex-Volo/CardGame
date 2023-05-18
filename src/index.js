@@ -2,7 +2,7 @@
 import { renderGameField } from './components/game.js';
 window.cardGame = {};
 
-export function renderApp(mode = 0) {
+export function renderApp(mode = 0, timerValue = 0) {
     const appElem = document.querySelector('.app-container');
 
     switch (mode) {
@@ -11,10 +11,10 @@ export function renderApp(mode = 0) {
                 appElem.innerHTML +
                 `<div class="shadow"></div>
                 <div class="difficulty result">
-                    <h1 class="difficulty__heading">Вы проиграли</h1>
-                    <div class="difficulty__selection">
-                        
-                    </div>
+                    <img src="./src/img/loose.png" alt="result" class="result__img">
+                    <h1 class="result__heading">Вы проиграли!</h1>
+                    <p class="result__text">Затраченное время:</p>
+                    <p class="result__time">${timerValue}</p>
                     <button class="btn result__again-btn">Играть снова</button>
                 </div>
                 `;

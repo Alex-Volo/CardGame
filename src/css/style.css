@@ -1,5 +1,5 @@
-/* stylelint-disable selector-class-pattern */
 /* stylelint-disable font-family-no-missing-generic-family-keyword */
+/* stylelint-disable selector-class-pattern */
 @font-face {
     font-family: stratosskyengweb;
     font-style: normal;
@@ -245,4 +245,25 @@ body {
 .result {
     position: absolute;
     z-index: 2;
+    padding: 32px 10px 48px;
+}
+
+.result__heading {
+    margin: 5px 0 28px;
+    font-size: 2.5rem;
+    line-height: 120%;
+    color: #004980;
+}
+
+.result__text {
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0 0 10px;
+}
+
+.result__time {
+    margin: 0 0 40px;
+    font-size: 4rem;
+    line-height: 4.5rem;
+    color: #000;
 }
