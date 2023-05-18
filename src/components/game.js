@@ -1,21 +1,21 @@
 import { Deck } from './deck.js';
 import { renderApp } from '../index.js';
+
 const suitsBackground = {
     '♠': 'spades.svg',
     '♣': 'clubs.svg',
     '♥': 'hearts.svg',
     '♦': 'diamonds.svg',
 };
-
 let firstCard = {
     value: 0,
     suit: 0,
 };
-
 let secondCard = {
     value: 0,
     suit: 0,
 };
+let countOpenedCards = 0;
 
 export function renderGameField(difficulty = 1) {
     clearInterval(window.cardGame.timerInterval);
@@ -94,26 +94,41 @@ function addCardListener() {
                 value: card.dataset.value,
                 suit: card.dataset.suit,
             };
+            countOpenedCards++;
             card.removeEventListener('click', compareCards);
         } else {
             secondCard = {
                 value: card.dataset.value,
                 suit: card.dataset.suit,
             };
+            countOpenedCards++;
             card.removeEventListener('click', compareCards);
+            // Условие проигрыша
             if (
                 firstCard.value !== secondCard.value ||
                 firstCard.suit !== secondCard.suit
             ) {
                 clearInterval(window.cardGame.timerInterval);
+                countOpenedCards = 0;
                 const timerValue =
                     document.querySelector('.game__digits').textContent;
                 console.log(timerValue);
                 window.cardGame.status = 'result';
-                renderApp(window.cardGame.status, timerValue);
+                renderApp(window.cardGame.status, timerValue, 'проиграли');
             }
             firstCard = resetCard();
             secondCard = resetCard();
+        }
+        // Условие выигрыша
+        if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
+            clearInterval(window.cardGame.timerInterval);
+            countOpenedCards = 0;
+            const timerValue =
+                document.querySelector('.game__digits').textContent;
+            console.log(timerValue);
+            window.cardGame.status = 'result';
+            renderApp(window.cardGame.status, timerValue, 'выиграли');
+            console.log('Победа!!!');
         }
     }
 }

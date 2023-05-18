@@ -2,7 +2,12 @@
 import { renderGameField } from './components/game.js';
 window.cardGame = {};
 
-export function renderApp(mode = 0, timerValue = 0) {
+const winOrLooseUrl = {
+    выиграли: 'win.png',
+    проиграли: 'loose.png',
+};
+
+export function renderApp(mode = 0, timerValue = 0, resultWord) {
     const appElem = document.querySelector('.app-container');
 
     switch (mode) {
@@ -11,8 +16,8 @@ export function renderApp(mode = 0, timerValue = 0) {
                 appElem.innerHTML +
                 `<div class="shadow"></div>
                 <div class="difficulty result">
-                    <img src="./src/img/loose.png" alt="result" class="result__img">
-                    <h1 class="result__heading">Вы проиграли!</h1>
+                    <img src="./src/img/${winOrLooseUrl[resultWord]}" alt="result" class="result__img">
+                    <h1 class="result__heading">Вы ${resultWord}!</h1>
                     <p class="result__text">Затраченное время:</p>
                     <p class="result__time">${timerValue}</p>
                     <button class="btn result__again-btn">Играть снова</button>
