@@ -4,7 +4,7 @@ require('./css/style.css');
 import './img/back.png';
 import looseImg from './img/loose.png';
 import winImg from './img/win.png';
-// import hearts from '../img/hearts.svg';
+
 window.cardGame = {};
 
 const appElem = document.querySelector('.app-container');
@@ -27,13 +27,6 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
                     <button class="btn result__again-btn">Играть снова</button>
                 </div>
                 `;
-
-            appElem
-                .querySelector('.result__again-btn')
-                .addEventListener('click', () => {
-                    window.cardGame.status = null;
-                    renderApp(window.cardGame.status);
-                });
             break;
 
         case 'game':
@@ -55,17 +48,6 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
             <button class="btn back_btn">Назад</button>
             `;
 
-            const backBtn = appElem.querySelector('.back_btn');
-            backBtn.addEventListener('click', () => {
-                window.cardGame.status = null;
-                renderApp(window.cardGame.status);
-            });
-
-            const againBtn = appElem.querySelector('.again_btn');
-            againBtn.addEventListener('click', () => {
-                renderApp(window.cardGame.status);
-            });
-
             renderGameField(window.cardGame.difficulty);
             break;
 
@@ -81,39 +63,60 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
                     <button class="btn start-button">Старт</button>
                 </div>
             `;
-
-            const difficultyButtons = appElem.querySelectorAll(
-                '.difficulty__selection-item'
-            );
-            window.cardGame.difficulty = '1';
-
-            for (let button of difficultyButtons) {
-                button.addEventListener('click', () => {
-                    difficultyButtons.forEach((el) =>
-                        el.classList.remove(
-                            'difficulty__selection-item_checked'
-                        )
-                    );
-                    button.classList.add('difficulty__selection-item_checked');
-                    window.cardGame.difficulty = button.textContent;
-                });
-            }
-
-            const startBtn = appElem.querySelector('.start-button');
-            startBtn.addEventListener('click', () => {
-                window.cardGame.status = 'game';
-                renderApp(window.cardGame.status);
-            });
     }
     addListenerOnApp();
 }
-
+// Делегирую события на один листенер
 function addListenerOnApp() {
     appElem.addEventListener('click', (event) => {
+        const difficultyButtons = appElem.querySelectorAll(
+            '.difficulty__selection-item'
+        );
+        const startBtn = appElem.querySelector('.start-button');
+        const backBtn = appElem.querySelector('.back_btn');
+        const againBtn = appElem.querySelector('.again_btn');
+        const resultAgainBtn = appElem.querySelector('.result__again-btn');
+
         switch (true) {
+            // Кнопки на сложность
             case event.target.classList.contains('difficulty__selection-item'):
-                console.log(event.target);
+                window.cardGame.difficulty = '1';
+
+                for (let button of difficultyButtons) {
+                    button.addEventListener('click', () => {
+                        difficultyButtons.forEach((el) =>
+                            el.classList.remove(
+                                'difficulty__selection-item_checked'
+                            )
+                        );
+                    });
+                }
+
+                event.target.classList.add(
+                    'difficulty__selection-item_checked'
+                );
+                window.cardGame.difficulty = event.target.textContent;
+                break;
+            // Кнопка старт
+            case event.target === startBtn:
+                window.cardGame.status = 'game';
+                renderApp(window.cardGame.status);
+                break;
+            // Кнопка назад
+            case event.target === backBtn:
+                window.cardGame.status = null;
+                renderApp(window.cardGame.status);
+                break;
+            // Кнопка начать заново
+            case event.target === againBtn:
+                renderApp(window.cardGame.status);
+                break;
+            // Кнопка начать заново на результате игры
+            case event.target === resultAgainBtn:
+                window.cardGame.status = null;
+                renderApp(window.cardGame.status);
         }
     });
 }
+
 renderApp(window.cardGame.status);
