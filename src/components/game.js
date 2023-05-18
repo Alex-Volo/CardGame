@@ -108,29 +108,25 @@ function addCardListener() {
                 firstCard.value !== secondCard.value ||
                 firstCard.suit !== secondCard.suit
             ) {
-                clearInterval(window.cardGame.timerInterval);
-                countOpenedCards = 0;
-                const timerValue =
-                    document.querySelector('.game__digits').textContent;
-                console.log(timerValue);
-                window.cardGame.status = 'result';
-                renderApp(window.cardGame.status, timerValue, 'проиграли');
+                checkAndDisplayResult('проиграли');
             }
             firstCard = resetCard();
             secondCard = resetCard();
         }
         // Условие выигрыша
         if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
-            clearInterval(window.cardGame.timerInterval);
-            countOpenedCards = 0;
-            const timerValue =
-                document.querySelector('.game__digits').textContent;
-            console.log(timerValue);
-            window.cardGame.status = 'result';
-            renderApp(window.cardGame.status, timerValue, 'выиграли');
-            console.log('Победа!!!');
+            checkAndDisplayResult('выиграли');
         }
     }
+}
+
+function checkAndDisplayResult(result) {
+    clearInterval(window.cardGame.timerInterval);
+    countOpenedCards = 0;
+    const timerValue = document.querySelector('.game__digits').textContent;
+    console.log(timerValue);
+    window.cardGame.status = 'result';
+    renderApp(window.cardGame.status, timerValue, result);
 }
 
 function flipCards() {
@@ -151,6 +147,7 @@ function countdown() {
     countdownEl.classList.add('game__countdown');
     countdownEl.textContent = '5';
     timer.after(countdownEl);
+
     window.cardGame.countdownInterval = setInterval(() => {
         if (countdownEl.textContent > 1) {
             countdownEl.textContent -= 1;

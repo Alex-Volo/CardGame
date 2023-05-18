@@ -2,14 +2,13 @@
 import { renderGameField } from './components/game.js';
 window.cardGame = {};
 
+const appElem = document.querySelector('.app-container');
 const winOrLooseUrl = {
     выиграли: 'win.png',
     проиграли: 'loose.png',
 };
 
 export function renderApp(mode = 0, timerValue = 0, resultWord) {
-    const appElem = document.querySelector('.app-container');
-
     switch (mode) {
         case 'result':
             appElem.innerHTML =
@@ -101,6 +100,15 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
                 renderApp(window.cardGame.status);
             });
     }
+    addListenerOnApp();
 }
 
+function addListenerOnApp() {
+    appElem.addEventListener('click', (event) => {
+        switch (true) {
+            case event.target.classList.contains('difficulty__selection-item'):
+                console.log(event.target);
+        }
+    });
+}
 renderApp(window.cardGame.status);
