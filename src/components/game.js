@@ -1,4 +1,5 @@
 import { Deck } from './deck.js';
+import { renderApp } from '../index.js';
 const suitsBackground = {
     '♠': 'spades.svg',
     '♣': 'clubs.svg',
@@ -104,7 +105,8 @@ function addCardListener() {
                 firstCard.value !== secondCard.value ||
                 firstCard.suit !== secondCard.suit
             ) {
-                console.log('Игра закончилась');
+                window.cardGame.status = 'result';
+                renderApp(window.cardGame.status);
             }
             firstCard = resetCard();
             secondCard = resetCard();

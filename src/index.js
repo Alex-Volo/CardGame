@@ -2,12 +2,29 @@
 import { renderGameField } from './components/game.js';
 window.cardGame = {};
 
-function renderApp(mode = 0) {
+export function renderApp(mode = 0) {
     const appElem = document.querySelector('.app-container');
 
     switch (mode) {
         case 'result':
-            appElem.innerHTML = appElem.innerHTML + ``;
+            appElem.innerHTML =
+                appElem.innerHTML +
+                `<div class="shadow"></div>
+                <div class="difficulty result">
+                    <h1 class="difficulty__heading">Вы проиграли</h1>
+                    <div class="difficulty__selection">
+                        
+                    </div>
+                    <button class="btn result__again-btn">Играть снова</button>
+                </div>
+                `;
+
+            appElem
+                .querySelector('.result__again-btn')
+                .addEventListener('click', () => {
+                    window.cardGame.status = null;
+                    renderApp(window.cardGame.status);
+                });
             break;
 
         case 'game':

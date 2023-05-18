@@ -1,0 +1,13 @@
+.shadow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-color: #004980;
+    opacity: 0.9;
+}
+
+.result {
+    position: absolute;
+    z-index: 2;
+}

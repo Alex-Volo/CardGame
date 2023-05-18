@@ -1,5 +1,5 @@
-/* stylelint-disable font-family-no-missing-generic-family-keyword */
 /* stylelint-disable selector-class-pattern */
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
 @font-face {
     font-family: stratosskyengweb;
     font-style: normal;
@@ -231,4 +231,18 @@ body {
     display: block;
     width: 10px;
     height: 10px;
+}
+
+.shadow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-color: #004980;
+    opacity: 0.9;
+}
+
+.result {
+    position: absolute;
+    z-index: 2;
 }
