@@ -4,6 +4,8 @@
     "description": "The game of remembering a pair of cards ### GitHubPages - https://alex-volo.github.io/CardGame/",
     "main": "index.js",
     "scripts": {
+        "build": "webpack",
+        "start": "webpack-dev-server --open",
         "prepare": "husky install",
         "lint:css": "stylelint ./src/css/**/*.css --fix",
         "lint:js": "eslint ./src/**/*.js --fix",
@@ -13,15 +15,21 @@
     "author": "Alex-Volo",
     "license": "ISC",
     "devDependencies": {
+        "css-loader": "^6.7.3",
         "eslint": "^8.40.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-prettier": "^4.2.1",
+        "html-webpack-plugin": "^5.5.1",
         "husky": "^8.0.3",
         "prettier": "^2.0.0",
+        "style-loader": "^3.3.2",
         "stylelint": "^14.8.2",
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-config-standard": "^25.0.0",
         "stylelint-prettier": "^3.0.0",
-        "stylelint-scss": "^5.0.0"
+        "stylelint-scss": "^5.0.0",
+        "webpack": "^5.83.1",
+        "webpack-cli": "^5.1.1",
+        "webpack-dev-server": "^4.15.0"
     }
 }

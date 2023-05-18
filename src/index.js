@@ -1,5 +1,11 @@
 /* eslint-disable no-case-declarations */
 import { renderGameField } from './components/game.js';
+require('./css/style.css');
+import './img/back.png';
+
+import './img/loose.png';
+
+import './img/win.png';
 window.cardGame = {};
 
 const appElem = document.querySelector('.app-container');

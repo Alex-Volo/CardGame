@@ -1,11 +1,15 @@
 import { Deck } from './deck.js';
 import { renderApp } from '../index.js';
+import spades from '../img/spades.svg';
+import clubs from '../img/clubs.svg';
+import diamonds from '../img/diamonds.svg';
+import hearts from '../img/hearts.svg';
 
 const suitsBackground = {
-    '♠': 'spades.svg',
-    '♣': 'clubs.svg',
-    '♥': 'hearts.svg',
-    '♦': 'diamonds.svg',
+    '♠': spades,
+    '♣': clubs,
+    '♥': hearts,
+    '♦': diamonds,
 };
 let firstCard = {
     value: 0,
@@ -48,20 +52,20 @@ function renderCards(deck) {
             `        
         <div data-value=${card.value} data-suit=${card.suit} class="card" >
             <div class="card__back"></div>
-            <div class="card__face" style="background: url(./src/img/${
+            <div class="card__face" style="background: url('${
                 suitsBackground[card.suit]
-            }) center center no-repeat, rgb(255, 255, 255);">
+            }') center center no-repeat, rgb(255, 255, 255);">
                 <div class="card__top">    
                     <div class="card__value">${card.value}
                     </div>
-                    <img class="card__suit" src="./src/img/${
+                    <img class="card__suit" src="${
                         suitsBackground[card.suit]
                     }" alt="suit">
                 </div>
                 <div class="card__bottom">    
                     <div class="card__value">${card.value}
                     </div>
-                    <img class="card__suit" src="./src/img/${
+                    <img class="card__suit" src="${
                         suitsBackground[card.suit]
                     }" alt="suit">
                 </div>
