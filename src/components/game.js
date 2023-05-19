@@ -11,14 +11,7 @@ const suitsBackground = {
     '♥': hearts,
     '♦': diamonds,
 };
-let firstCard = {
-    value: 0,
-    suit: 0,
-};
-let secondCard = {
-    value: 0,
-    suit: 0,
-};
+
 let countOpenedCards = 0;
 
 export function renderGameField(difficulty = 1) {
@@ -93,33 +86,39 @@ function addCardListener() {
         face.classList.add('card__flip-face1');
         back.classList.add('card__flip-back1');
 
-        if (!firstCard.value) {
-            firstCard = {
-                value: card.dataset.value,
-                suit: card.dataset.suit,
-            };
-            countOpenedCards++;
-            card.removeEventListener('click', compareCards);
-        } else {
-            secondCard = {
-                value: card.dataset.value,
-                suit: card.dataset.suit,
-            };
-            countOpenedCards++;
-            card.removeEventListener('click', compareCards);
-            // Условие проигрыша
-            if (
-                firstCard.value !== secondCard.value ||
-                firstCard.suit !== secondCard.suit
-            ) {
-                checkAndDisplayResult('проиграли');
+        setTimeout(checkConditions, 800);
+
+        function checkConditions() {
+            if (!window.cardGame.firstCard.value) {
+                window.cardGame.firstCard = {
+                    value: card.dataset.value,
+                    suit: card.dataset.suit,
+                };
+                countOpenedCards++;
+                card.removeEventListener('click', compareCards);
+            } else {
+                window.cardGame.secondCard = {
+                    value: card.dataset.value,
+                    suit: card.dataset.suit,
+                };
+                countOpenedCards++;
+                card.removeEventListener('click', compareCards);
+                // Условие проигрыша
+                if (
+                    window.cardGame.firstCard.value !==
+                        window.cardGame.secondCard.value ||
+                    window.cardGame.firstCard.suit !==
+                        window.cardGame.secondCard.suit
+                ) {
+                    checkAndDisplayResult('проиграли');
+                }
+                window.cardGame.firstCard = resetCard();
+                window.cardGame.secondCard = resetCard();
             }
-            firstCard = resetCard();
-            secondCard = resetCard();
-        }
-        // Условие выигрыша
-        if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
-            checkAndDisplayResult('выиграли');
+            // Условие выигрыша
+            if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
+                checkAndDisplayResult('выиграли');
+            }
         }
     }
 }

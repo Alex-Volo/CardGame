@@ -6,7 +6,14 @@ import looseImg from './img/loose.png';
 import winImg from './img/win.png';
 
 window.cardGame = {};
-
+window.cardGame.firstCard = {
+    value: 0,
+    suit: 0,
+};
+window.cardGame.secondCard = {
+    value: 0,
+    suit: 0,
+};
 const appElem = document.querySelector('.app-container');
 const winOrLooseUrl = {
     выиграли: winImg,
@@ -15,18 +22,18 @@ const winOrLooseUrl = {
 
 export function renderApp(mode = 0, timerValue = 0, resultWord) {
     switch (mode) {
-        case 'result':
-            appElem.innerHTML =
-                appElem.innerHTML +
-                `<div class="shadow"></div>
-                <div class="difficulty result">
-                    <img src="${winOrLooseUrl[resultWord]}" alt="result" class="result__img">
-                    <h1 class="result__heading">Вы ${resultWord}!</h1>
-                    <p class="result__text">Затраченное время:</p>
-                    <p class="result__time">${timerValue}</p>
-                    <button class="btn result__again-btn">Играть снова</button>
+        default:
+            appElem.innerHTML = `
+                <div class="difficulty">
+                    <h1 class="difficulty__heading">Выбери<br>сложность</h1>
+                    <div class="difficulty__selection">
+                        <button class="difficulty__selection-item">1</button>
+                        <button class="difficulty__selection-item">2</button>
+                        <button class="difficulty__selection-item">3</button>
+                    </div>
+                    <button class="btn start-button">Старт</button>
                 </div>
-                `;
+            `;
             break;
 
         case 'game':
@@ -51,18 +58,19 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
             renderGameField(window.cardGame.difficulty);
             break;
 
-        default:
-            appElem.innerHTML = `
-                <div class="difficulty">
-                    <h1 class="difficulty__heading">Выбери<br>сложность</h1>
-                    <div class="difficulty__selection">
-                        <button class="difficulty__selection-item">1</button>
-                        <button class="difficulty__selection-item">2</button>
-                        <button class="difficulty__selection-item">3</button>
-                    </div>
-                    <button class="btn start-button">Старт</button>
+        case 'result':
+            appElem.innerHTML =
+                appElem.innerHTML +
+                `<div class="shadow"></div>
+                <div class="difficulty result">
+                    <img src="${winOrLooseUrl[resultWord]}" alt="result" class="result__img">
+                    <h1 class="result__heading">Вы ${resultWord}!</h1>
+                    <p class="result__text">Затраченное время:</p>
+                    <p class="result__time">${timerValue}</p>
+                    <button class="btn result__again-btn">Играть снова</button>
                 </div>
-            `;
+                `;
+            break;
     }
     addListenerOnApp();
 }
@@ -109,6 +117,10 @@ function addListenerOnApp() {
                 break;
             // Кнопка начать заново
             case event.target === againBtn:
+                window.cardGame.firstCard = {
+                    value: 0,
+                    suit: 0,
+                };
                 renderApp(window.cardGame.status);
                 break;
             // Кнопка начать заново на результате игры
