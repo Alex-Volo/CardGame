@@ -17,7 +17,7 @@ export function renderGameField(difficulty = 1) {
         .double()
         .shuffle()
         .render(gameField);
-
+    console.log(deck);
     window.cardGame.flipTimeout = setTimeout(() => {
         flipCards();
         addCardListener();
