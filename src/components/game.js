@@ -1,20 +1,10 @@
 import { Deck } from './deck.js';
 import { renderApp } from '../index.js';
-import spades from '../img/spades.svg';
-import clubs from '../img/clubs.svg';
-import diamonds from '../img/diamonds.svg';
-import hearts from '../img/hearts.svg';
-
-const suitsBackground = {
-    '♠': spades,
-    '♣': clubs,
-    '♥': hearts,
-    '♦': diamonds,
-};
 
 let countOpenedCards = 0;
 
 export function renderGameField(difficulty = 1) {
+    const gameField = document.querySelector('.game__field');
     clearInterval(window.cardGame.timerInterval);
     clearInterval(window.cardGame.countdownInterval);
     clearTimeout(window.cardGame.flipTimeout);
@@ -25,47 +15,14 @@ export function renderGameField(difficulty = 1) {
         .shuffle()
         .cut(cardPresets[+difficulty])
         .double()
-        .shuffle();
+        .shuffle()
+        .render(gameField);
 
-    renderCards(deck);
     window.cardGame.flipTimeout = setTimeout(() => {
         flipCards();
         addCardListener();
     }, 5000);
     countdown();
-}
-
-function renderCards(deck) {
-    const gameField = document.querySelector('.game__field');
-    gameField.innerHTML = '';
-
-    for (let card of deck.cards) {
-        gameField.innerHTML =
-            gameField.innerHTML +
-            `        
-        <div data-value=${card.value} data-suit=${card.suit} class="card" >
-            <div class="card__back"></div>
-            <div class="card__face" style="background: url('${
-                suitsBackground[card.suit]
-            }') center center no-repeat, rgb(255, 255, 255);">
-                <div class="card__top">    
-                    <div class="card__value">${card.value}
-                    </div>
-                    <img class="card__suit" src="${
-                        suitsBackground[card.suit]
-                    }" alt="suit">
-                </div>
-                <div class="card__bottom">    
-                    <div class="card__value">${card.value}
-                    </div>
-                    <img class="card__suit" src="${
-                        suitsBackground[card.suit]
-                    }" alt="suit">
-                </div>
-            </div>
-        </div>
-        `;
-    }
 }
 
 function addCardListener() {
@@ -127,7 +84,6 @@ function checkAndDisplayResult(result) {
     clearInterval(window.cardGame.timerInterval);
     countOpenedCards = 0;
     const timerValue = document.querySelector('.game__digits').textContent;
-    console.log(timerValue);
     window.cardGame.status = 'result';
     renderApp(window.cardGame.status, timerValue, result);
 }
