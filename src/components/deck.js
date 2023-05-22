@@ -20,6 +20,7 @@ export class Deck {
             '♥': hearts,
             '♦': diamonds,
         };
+        this.cardsNodeList = null;
         this.cards = this.VALUES.reduce((result, value) => {
             for (let suit of this.SUITS) {
                 result.push({
@@ -73,6 +74,18 @@ export class Deck {
     render(element = document.body) {
         for (let card of this.cards) {
             element.innerHTML = element.innerHTML += card.html;
+        }
+        this.cardsNodeList = document.querySelectorAll('.card');
+        return this;
+    }
+
+    flipAllCards() {
+        for (let card of this.cardsNodeList) {
+            const face = card.querySelector('.card__face');
+            const back = card.querySelector('.card__back');
+
+            face.classList.add('card__flip-face');
+            back.classList.add('card__flip-back');
         }
         return this;
     }

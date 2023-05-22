@@ -5,22 +5,34 @@ import './img/back.png';
 import looseImg from './img/loose.png';
 import winImg from './img/win.png';
 
+declare global {
+    interface Window {
+        cardGame: any;
+    }
+}
+
 window.cardGame = {};
-window.cardGame.firstCard = {
-    value: 0,
-    suit: 0,
+window.cardGame = {
+    firstCard: {
+        value: '0',
+        suit: '0',
+    },
+    secondCard: {
+        value: '0',
+        suit: '0',
+    },
+    difficulty: 1,
+    status: 'difficulty',
 };
-window.cardGame.secondCard = {
-    value: 0,
-    suit: 0,
-};
-const appElem = document.querySelector('.app-container');
+
+const appElem =
+    document.querySelector<HTMLDivElement>('.app-container') || document.body;
 const winOrLooseUrl = {
     выиграли: winImg,
     проиграли: looseImg,
 };
 
-export function renderApp(mode = 0, timerValue = 0, resultWord) {
+export function renderApp(mode = '0', timerValue = 0, resultWord = 'выиграли') {
     switch (mode) {
         default:
             appElem.innerHTML = `
@@ -76,29 +88,39 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
 }
 // Делегирую события на один листенер
 function addListenerOnApp() {
-    appElem.addEventListener('click', (event) => {
+    appElem.addEventListener('click', (event: any): void => {
         const difficultyButtons = appElem.querySelectorAll(
-            '.difficulty__selection-item'
+            'button.difficulty__selection-item'
         );
         const startBtn = appElem.querySelector('.start-button');
         const backBtn = appElem.querySelector('.back_btn');
         const againBtn = appElem.querySelector('.again_btn');
         const resultAgainBtn = appElem.querySelector('.result__again-btn');
-
+        if (event.target === null) return;
         switch (true) {
             // Кнопки на сложность
             case event.target.classList.contains('difficulty__selection-item'):
-                window.cardGame.difficulty = '1';
+                window.cardGame.difficulty = 1;
 
-                for (let button of difficultyButtons) {
-                    button.addEventListener('click', () => {
+                // for (let button of difficultyButtons) {
+                //     button.addEventListener('click', () => {
+                //         difficultyButtons.forEach((el) =>
+                //             el.classList.remove(
+                //                 'difficulty__selection-item_checked'
+                //             )
+                //         );
+                //     });
+                // }
+
+                difficultyButtons.forEach((element) => {
+                    element.addEventListener('click', () => {
                         difficultyButtons.forEach((el) =>
                             el.classList.remove(
                                 'difficulty__selection-item_checked'
                             )
                         );
                     });
-                }
+                });
 
                 event.target.classList.add(
                     'difficulty__selection-item_checked'
@@ -118,8 +140,8 @@ function addListenerOnApp() {
             // Кнопка начать заново
             case event.target === againBtn:
                 window.cardGame.firstCard = {
-                    value: 0,
-                    suit: 0,
+                    value: '0',
+                    suit: '0',
                 };
                 renderApp(window.cardGame.status);
                 break;

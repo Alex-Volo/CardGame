@@ -1,5 +1,5 @@
 import { Deck } from './deck.js';
-import { renderApp } from '../index.js';
+import { renderApp } from '../index.ts';
 
 let countOpenedCards = 0;
 
@@ -19,7 +19,7 @@ export function renderGameField(difficulty = 1) {
         .render(gameField);
     console.log(deck);
     window.cardGame.flipTimeout = setTimeout(() => {
-        flipCards();
+        deck.flipAllCards();
         addCardListener();
     }, 5000);
     countdown();
@@ -28,7 +28,7 @@ export function renderGameField(difficulty = 1) {
 function addCardListener() {
     const cards = document.body.querySelectorAll('.card');
     const resetCard = () => {
-        return { value: 0, suit: 0 };
+        return { value: '0', suit: '0' };
     };
 
     for (let card of cards) {
@@ -46,7 +46,7 @@ function addCardListener() {
         setTimeout(checkConditions, 800);
 
         function checkConditions() {
-            if (!window.cardGame.firstCard.value) {
+            if (window.cardGame.firstCard.value === '0') {
                 window.cardGame.firstCard = {
                     value: card.dataset.value,
                     suit: card.dataset.suit,
@@ -88,18 +88,6 @@ function checkAndDisplayResult(result) {
     renderApp(window.cardGame.status, timerValue, result);
 }
 
-function flipCards() {
-    const cards = document.body.querySelectorAll('.card');
-
-    for (let card of cards) {
-        const face = card.querySelector('.card__face');
-        const back = card.querySelector('.card__back');
-
-        face.classList.add('card__flip-face');
-        back.classList.add('card__flip-back');
-    }
-}
-
 function countdown() {
     const timer = document.querySelector('.game__timer');
     const countdownEl = document.createElement('div');
@@ -108,7 +96,7 @@ function countdown() {
     timer.after(countdownEl);
 
     window.cardGame.countdownInterval = setInterval(() => {
-        if (countdownEl.textContent > 1) {
+        if (Number(countdownEl.textContent) > 1) {
             countdownEl.textContent -= 1;
         } else {
             clearInterval(window.cardGame.countdownInterval);
