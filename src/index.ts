@@ -25,8 +25,7 @@ window.cardGame = {
     status: 'difficulty',
 };
 
-const appElem =
-    document.querySelector<HTMLDivElement>('.app-container') || document.body;
+const appElem = document.querySelector('.app-container') as HTMLElement;
 const winOrLooseUrl = {
     выиграли: winImg,
     проиграли: looseImg,
