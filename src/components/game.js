@@ -1,69 +1,28 @@
 import { Deck } from './deck.js';
-const suitsBackground = {
-    '♠': 'spades.svg',
-    '♣': 'clubs.svg',
-    '♥': 'hearts.svg',
-    '♦': 'diamonds.svg',
-};
+import { renderApp } from '../index.js';
 
-let firstCard = {
-    value: 0,
-    suit: 0,
-};
-
-let secondCard = {
-    value: 0,
-    suit: 0,
-};
+let countOpenedCards = 0;
 
 export function renderGameField(difficulty = 1) {
+    const gameField = document.querySelector('.game__field');
+    clearInterval(window.cardGame.timerInterval);
+    clearInterval(window.cardGame.countdownInterval);
+    clearTimeout(window.cardGame.flipTimeout);
+
     const deck = new Deck();
     const cardPresets = [3, 3, 6, 9];
     window.cardGame.currentDeck = deck
         .shuffle()
         .cut(cardPresets[+difficulty])
         .double()
-        .shuffle();
-
-    renderCards(deck);
-    setTimeout(() => {
+        .shuffle()
+        .render(gameField);
+    console.log(deck);
+    window.cardGame.flipTimeout = setTimeout(() => {
         flipCards();
         addCardListener();
     }, 5000);
     countdown();
-}
-
-function renderCards(deck) {
-    const gameField = document.querySelector('.game__field');
-    gameField.innerHTML = '';
-
-    for (let card of deck.cards) {
-        gameField.innerHTML =
-            gameField.innerHTML +
-            `        
-        <div data-value=${card.value} data-suit=${card.suit} class="card" >
-            <div class="card__back"></div>
-            <div class="card__face" style="background: url(./src/img/${
-                suitsBackground[card.suit]
-            }) center center no-repeat, rgb(255, 255, 255);">
-                <div class="card__top">    
-                    <div class="card__value">${card.value}
-                    </div>
-                    <img class="card__suit" src="./src/img/${
-                        suitsBackground[card.suit]
-                    }" alt="suit">
-                </div>
-                <div class="card__bottom">    
-                    <div class="card__value">${card.value}
-                    </div>
-                    <img class="card__suit" src="./src/img/${
-                        suitsBackground[card.suit]
-                    }" alt="suit">
-                </div>
-            </div>
-        </div>
-        `;
-    }
 }
 
 function addCardListener() {
@@ -84,28 +43,49 @@ function addCardListener() {
         face.classList.add('card__flip-face1');
         back.classList.add('card__flip-back1');
 
-        if (!firstCard.value) {
-            firstCard = {
-                value: card.dataset.value,
-                suit: card.dataset.suit,
-            };
-            card.removeEventListener('click', compareCards);
-        } else {
-            secondCard = {
-                value: card.dataset.value,
-                suit: card.dataset.suit,
-            };
-            card.removeEventListener('click', compareCards);
-            if (
-                firstCard.value !== secondCard.value ||
-                firstCard.suit !== secondCard.suit
-            ) {
-                console.log('Игра закончилась');
+        setTimeout(checkConditions, 800);
+
+        function checkConditions() {
+            if (!window.cardGame.firstCard.value) {
+                window.cardGame.firstCard = {
+                    value: card.dataset.value,
+                    suit: card.dataset.suit,
+                };
+                countOpenedCards++;
+                card.removeEventListener('click', compareCards);
+            } else {
+                window.cardGame.secondCard = {
+                    value: card.dataset.value,
+                    suit: card.dataset.suit,
+                };
+                countOpenedCards++;
+                card.removeEventListener('click', compareCards);
+                // Условие проигрыша
+                if (
+                    window.cardGame.firstCard.value !==
+                        window.cardGame.secondCard.value ||
+                    window.cardGame.firstCard.suit !==
+                        window.cardGame.secondCard.suit
+                ) {
+                    checkAndDisplayResult('проиграли');
+                }
+                window.cardGame.firstCard = resetCard();
+                window.cardGame.secondCard = resetCard();
             }
-            firstCard = resetCard();
-            secondCard = resetCard();
+            // Условие выигрыша
+            if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
+                checkAndDisplayResult('выиграли');
+            }
         }
     }
+}
+
+function checkAndDisplayResult(result) {
+    clearInterval(window.cardGame.timerInterval);
+    countOpenedCards = 0;
+    const timerValue = document.querySelector('.game__digits').textContent;
+    window.cardGame.status = 'result';
+    renderApp(window.cardGame.status, timerValue, result);
 }
 
 function flipCards() {
@@ -126,11 +106,12 @@ function countdown() {
     countdownEl.classList.add('game__countdown');
     countdownEl.textContent = '5';
     timer.after(countdownEl);
-    const countdownInterval = setInterval(() => {
+
+    window.cardGame.countdownInterval = setInterval(() => {
         if (countdownEl.textContent > 1) {
             countdownEl.textContent -= 1;
         } else {
-            clearInterval(countdownInterval);
+            clearInterval(window.cardGame.countdownInterval);
             countdownEl.textContent = 'Start';
             setTimeout(() => (countdownEl.textContent = ''), 1000);
             startTimer();
@@ -148,6 +129,6 @@ function startTimer() {
         const seconds = ('00' + (time % 60)).slice(-2);
         timerDigits.textContent = `${minutes}.${seconds}`;
     }
-    const timerInterval = setInterval(setTime, 1000);
-    setTimeout(clearInterval, 10000, timerInterval);
+    window.cardGame.timerInterval = setInterval(setTime, 1000);
+    setTimeout(clearInterval, 600000, window.cardGame.timerInterval);
 }
