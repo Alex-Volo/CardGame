@@ -1,3 +1,5 @@
+// Если у вас стала болеть голова, не волнуйтесь, возможно, это растет мозг.
+
 import { renderGameField } from './components/game';
 require('./css/style.css');
 import './img/back.png';

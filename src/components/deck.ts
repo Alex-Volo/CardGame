@@ -77,7 +77,7 @@ export class Deck {
         return this;
     }
 
-    prepare(difficulty){
+    prepare(difficulty) {
         return this.shuffle().cut(difficulty).double().shuffle();
     }
 
@@ -98,13 +98,6 @@ export class Deck {
             (face as HTMLElement).classList.add('card__flip-face');
             (back as HTMLElement).classList.add('card__flip-back');
         });
-        // {
-        //     const face = card.querySelector('.card__face') as HTMLElement;
-        //     const back = card.querySelector('.card__back');
-
-        //     face.classList.add('card__flip-face');
-        //     back.classList.add('card__flip-back');
-        // }
         return this;
     }
 }
