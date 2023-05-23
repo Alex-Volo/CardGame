@@ -98,7 +98,7 @@ function addListenerOnApp() {
         const againBtn = appElem.querySelector('.again_btn');
         const resultAgainBtn = appElem.querySelector('.result__again-btn');
 
-        let target = event.target as HTMLElement;
+        const target = event.target as HTMLElement;
         switch (true) {
             // Кнопки на сложность
             case target.classList.contains('difficulty__selection-item'):
@@ -117,28 +117,20 @@ function addListenerOnApp() {
                 target.classList.add('difficulty__selection-item_checked');
                 window.cardGame.difficulty = target.textContent;
                 break;
-            // Кнопка старт
-            case target === startBtn:
+            // Кнопка старт || Кнопка начать заново
+            case target === startBtn || target === againBtn:
                 window.cardGame.status = 'game';
-                renderApp(window.cardGame.status);
-                break;
-            // Кнопка назад
-            case target === backBtn:
-                window.cardGame.status = null;
-                renderApp(window.cardGame.status);
-                break;
-            // Кнопка начать заново
-            case target === againBtn:
                 window.cardGame.firstCard = {
                     value: '0',
                     suit: '0',
                 };
                 renderApp(window.cardGame.status);
                 break;
-            // Кнопка начать заново на результате игры
-            case target === resultAgainBtn:
+            // Кнопка назад || Кнопка начать заново на результате игры
+            case target === backBtn || target === resultAgainBtn:
                 window.cardGame.status = null;
                 renderApp(window.cardGame.status);
+                break;
         }
     });
 }

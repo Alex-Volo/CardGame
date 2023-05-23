@@ -9,6 +9,7 @@ export class Deck {
     suitsBackground: { '♠': any; '♣': any; '♥': any; '♦': any };
     cardsNodeList: NodeList | null;
     cards: { value: string; suit: string; html: string }[];
+    cardPresets: number[];
     constructor() {
         this.SUITS = ['♠', '♣', '♥', '♦'];
         this.VALUES = ['6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -18,6 +19,7 @@ export class Deck {
             '♥': hearts,
             '♦': diamonds,
         };
+        this.cardPresets = [3, 3, 6, 9];
         this.cardsNodeList = null;
         this.cards = this.VALUES.reduce(
             (
@@ -65,14 +67,18 @@ export class Deck {
         return this;
     }
 
-    cut(length = 3) {
-        this.cards = this.cards.slice(0, length);
+    cut(difficulty = 1) {
+        this.cards = this.cards.slice(0, this.cardPresets[difficulty]);
         return this;
     }
 
     double() {
         this.cards = [this.cards, ...this.cards].flat();
         return this;
+    }
+
+    prepare(difficulty){
+        return this.shuffle().cut(difficulty).double().shuffle();
     }
 
     render(element = document.body) {

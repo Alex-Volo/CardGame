@@ -5,19 +5,13 @@ let countOpenedCards = 0;
 
 export function renderGameField(difficulty = 1) {
     const gameField = document.querySelector('.game__field') as HTMLElement;
+    const deck = new Deck();
     clearInterval(window.cardGame.timerInterval);
     clearInterval(window.cardGame.countdownInterval);
     clearTimeout(window.cardGame.flipTimeout);
+    countOpenedCards = 0;
 
-    const deck = new Deck();
-    const cardPresets = [3, 3, 6, 9];
-    window.cardGame.currentDeck = deck
-        .shuffle()
-        .cut(cardPresets[+difficulty])
-        .double()
-        .shuffle()
-        .render(gameField);
-
+    window.cardGame.currentDeck = deck.prepare(difficulty).render(gameField);
     window.cardGame.flipTimeout = setTimeout(() => {
         deck.flipAllCards();
         addCardListener();
@@ -27,9 +21,6 @@ export function renderGameField(difficulty = 1) {
 
 function addCardListener() {
     const cards = Array.from(document.body.querySelectorAll('.card'));
-    const resetCard = () => {
-        return { value: '0', suit: '0' };
-    };
 
     for (let card of cards) {
         card.addEventListener('click', compareCards);
@@ -39,13 +30,12 @@ function addCardListener() {
         const card = event.currentTarget;
         const face = card.querySelector('.card__face');
         const back = card.querySelector('.card__back');
+        const resetCard = () => ({ value: '0', suit: '0' });
 
         face.classList.add('card__flip-face1');
         back.classList.add('card__flip-back1');
 
-        checkConditions();
-
-        function checkConditions() {
+        (function checkConditions() {
             if (window.cardGame.firstCard.value === '0') {
                 window.cardGame.firstCard = {
                     value: card.dataset.value,
@@ -76,7 +66,7 @@ function addCardListener() {
             if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
                 setTimeout(checkAndDisplayResult, 800, 'выиграли');
             }
-        }
+        })();
     }
 }
 
@@ -120,6 +110,7 @@ function startTimer() {
         const seconds = ('00' + (time % 60)).slice(-2);
         timerDigits.textContent = `${minutes}.${seconds}`;
     }
+
     window.cardGame.timerInterval = setInterval(setTime, 1000);
     setTimeout(clearInterval, 600000, window.cardGame.timerInterval);
 }
