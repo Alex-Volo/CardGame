@@ -116,7 +116,7 @@ function startTimer() {
 
     function setTime() {
         time += 1;
-        const minutes = ('00' + Math.round(time / 60)).slice(-2);
+        const minutes = ('00' + Math.floor(time / 60)).slice(-2);
         const seconds = ('00' + (time % 60)).slice(-2);
         timerDigits.textContent = `${minutes}.${seconds}`;
     }
