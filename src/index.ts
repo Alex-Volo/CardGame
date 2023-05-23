@@ -31,7 +31,7 @@ const winOrLooseUrl = {
     проиграли: looseImg,
 };
 
-export function renderApp(mode = '0', timerValue = 0, resultWord = 'выиграли') {
+export function renderApp(mode = '0', timerValue = 0, resultWord = 'выиграли'): void {
     switch (mode) {
         default:
             appElem.innerHTML = `
@@ -87,57 +87,49 @@ export function renderApp(mode = '0', timerValue = 0, resultWord = 'выигра
 }
 // Делегирую события на один листенер
 function addListenerOnApp() {
-    appElem.addEventListener('click', (event: any): void => {
-        const difficultyButtons = appElem.querySelectorAll(
-            'button.difficulty__selection-item'
+    appElem.addEventListener('click', (event: MouseEvent): void => {
+        const difficultyButtons = Array.from(
+            appElem.querySelectorAll('button.difficulty__selection-item')
         );
+        console.log(difficultyButtons);
         const startBtn = appElem.querySelector('.start-button');
         const backBtn = appElem.querySelector('.back_btn');
         const againBtn = appElem.querySelector('.again_btn');
         const resultAgainBtn = appElem.querySelector('.result__again-btn');
-        if (event.target === null) return;
+        // if (!event.target) return;
+        let target = event.target as HTMLElement;
         switch (true) {
             // Кнопки на сложность
-            case event.target.classList.contains('difficulty__selection-item'):
+            case target.classList.contains('difficulty__selection-item'):
                 window.cardGame.difficulty = 1;
 
-                // for (let button of difficultyButtons) {
-                //     button.addEventListener('click', () => {
-                //         difficultyButtons.forEach((el) =>
-                //             el.classList.remove(
-                //                 'difficulty__selection-item_checked'
-                //             )
-                //         );
-                //     });
-                // }
-
-                difficultyButtons.forEach((element) => {
-                    element.addEventListener('click', () => {
+                for (let button of difficultyButtons) {
+                    button.addEventListener('click', () => {
                         difficultyButtons.forEach((el) =>
                             el.classList.remove(
                                 'difficulty__selection-item_checked'
                             )
                         );
                     });
-                });
+                }
 
-                event.target.classList.add(
+                target.classList.add(
                     'difficulty__selection-item_checked'
                 );
-                window.cardGame.difficulty = event.target.textContent;
+                window.cardGame.difficulty = target.textContent;
                 break;
             // Кнопка старт
-            case event.target === startBtn:
+            case target === startBtn:
                 window.cardGame.status = 'game';
                 renderApp(window.cardGame.status);
                 break;
             // Кнопка назад
-            case event.target === backBtn:
+            case target === backBtn:
                 window.cardGame.status = null;
                 renderApp(window.cardGame.status);
                 break;
             // Кнопка начать заново
-            case event.target === againBtn:
+            case target === againBtn:
                 window.cardGame.firstCard = {
                     value: '0',
                     suit: '0',
@@ -145,7 +137,7 @@ function addListenerOnApp() {
                 renderApp(window.cardGame.status);
                 break;
             // Кнопка начать заново на результате игры
-            case event.target === resultAgainBtn:
+            case target === resultAgainBtn:
                 window.cardGame.status = null;
                 renderApp(window.cardGame.status);
         }

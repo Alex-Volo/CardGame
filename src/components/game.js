@@ -36,14 +36,14 @@ function addCardListener() {
     }
 
     function compareCards(event) {
-        const card = event.srcElement.closest('.card');
+        const card = event.currentTarget;
         const face = card.querySelector('.card__face');
         const back = card.querySelector('.card__back');
 
         face.classList.add('card__flip-face1');
         back.classList.add('card__flip-back1');
 
-        setTimeout(checkConditions, 800);
+        checkConditions();
 
         function checkConditions() {
             if (window.cardGame.firstCard.value === '0') {
@@ -67,14 +67,14 @@ function addCardListener() {
                     window.cardGame.firstCard.suit !==
                         window.cardGame.secondCard.suit
                 ) {
-                    checkAndDisplayResult('проиграли');
+                    setTimeout(checkAndDisplayResult, 800, 'проиграли');
                 }
                 window.cardGame.firstCard = resetCard();
                 window.cardGame.secondCard = resetCard();
             }
             // Условие выигрыша
             if (countOpenedCards === window.cardGame.currentDeck.cards.length) {
-                checkAndDisplayResult('выиграли');
+                setTimeout(checkAndDisplayResult, 800, 'выиграли');
             }
         }
     }
