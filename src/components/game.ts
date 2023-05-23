@@ -1,10 +1,10 @@
-import { Deck } from './deck.js';
-import { renderApp } from '../index.ts';
+import { Deck } from './deck';
+import { renderApp } from '../index';
 
 let countOpenedCards = 0;
 
 export function renderGameField(difficulty = 1) {
-    const gameField = document.querySelector('.game__field');
+    const gameField = document.querySelector('.game__field') as HTMLElement;
     clearInterval(window.cardGame.timerInterval);
     clearInterval(window.cardGame.countdownInterval);
     clearTimeout(window.cardGame.flipTimeout);
@@ -17,7 +17,7 @@ export function renderGameField(difficulty = 1) {
         .double()
         .shuffle()
         .render(gameField);
-    console.log(deck);
+
     window.cardGame.flipTimeout = setTimeout(() => {
         deck.flipAllCards();
         addCardListener();
@@ -26,7 +26,7 @@ export function renderGameField(difficulty = 1) {
 }
 
 function addCardListener() {
-    const cards = document.body.querySelectorAll('.card');
+    const cards = Array.from(document.body.querySelectorAll('.card'));
     const resetCard = () => {
         return { value: '0', suit: '0' };
     };
@@ -83,21 +83,24 @@ function addCardListener() {
 function checkAndDisplayResult(result) {
     clearInterval(window.cardGame.timerInterval);
     countOpenedCards = 0;
-    const timerValue = document.querySelector('.game__digits').textContent;
+    const timerValue = (document.querySelector('.game__digits') as HTMLElement)
+        .textContent;
     window.cardGame.status = 'result';
     renderApp(window.cardGame.status, timerValue, result);
 }
 
 function countdown() {
-    const timer = document.querySelector('.game__timer');
-    const countdownEl = document.createElement('div');
+    const timer = document.querySelector('.game__timer') as HTMLElement;
+    const countdownEl = document.createElement('div') as HTMLDivElement;
     countdownEl.classList.add('game__countdown');
     countdownEl.textContent = '5';
     timer.after(countdownEl);
 
     window.cardGame.countdownInterval = setInterval(() => {
         if (Number(countdownEl.textContent) > 1) {
-            countdownEl.textContent -= 1;
+            countdownEl.textContent = String(
+                Number(countdownEl.textContent) - 1
+            );
         } else {
             clearInterval(window.cardGame.countdownInterval);
             countdownEl.textContent = 'Start';
@@ -108,7 +111,7 @@ function countdown() {
 }
 
 function startTimer() {
-    const timerDigits = document.querySelector('.game__digits');
+    const timerDigits = document.querySelector('.game__digits') as HTMLElement;
     let time = 0;
 
     function setTime() {

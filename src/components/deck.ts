@@ -3,14 +3,12 @@ import clubs from '../img/clubs.svg';
 import diamonds from '../img/diamonds.svg';
 import hearts from '../img/hearts.svg';
 
-// const suitsBackground = {
-//     '♠': spades,
-//     '♣': clubs,
-//     '♥': hearts,
-//     '♦': diamonds,
-// };
-
 export class Deck {
+    SUITS: string[];
+    VALUES: string[];
+    suitsBackground: { '♠': any; '♣': any; '♥': any; '♦': any };
+    cardsNodeList: NodeList | null;
+    cards: { value: string; suit: string; html: string }[];
     constructor() {
         this.SUITS = ['♠', '♣', '♥', '♦'];
         this.VALUES = ['6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -21,12 +19,16 @@ export class Deck {
             '♦': diamonds,
         };
         this.cardsNodeList = null;
-        this.cards = this.VALUES.reduce((result, value) => {
-            for (let suit of this.SUITS) {
-                result.push({
-                    value: value,
-                    suit: suit,
-                    html: `
+        this.cards = this.VALUES.reduce(
+            (
+                result: { value: string; suit: string; html: string }[],
+                value: string
+            ) => {
+                for (let suit of this.SUITS) {
+                    result.push({
+                        value: value,
+                        suit: suit,
+                        html: `
                     <div data-value=${value} data-suit=${suit} class="card" >
                         <div class="card__back"></div>
                         <div class="card__face" style="background: url('${this.suitsBackground[suit]}') center center no-repeat, rgb(255, 255, 255);">
@@ -43,10 +45,12 @@ export class Deck {
                         </div>
                     </div>
                     `,
-                });
-            }
-            return result;
-        }, []);
+                    });
+                }
+                return result;
+            },
+            []
+        );
     }
 
     shuffle() {
@@ -80,13 +84,21 @@ export class Deck {
     }
 
     flipAllCards() {
-        for (let card of this.cardsNodeList) {
-            const face = card.querySelector('.card__face');
-            const back = card.querySelector('.card__back');
+        if (!this.cardsNodeList) return;
+        this.cardsNodeList.forEach((element: Node | HTMLElement) => {
+            const face = (element as HTMLElement).querySelector('.card__face');
+            const back = (element as HTMLElement).querySelector('.card__back');
 
-            face.classList.add('card__flip-face');
-            back.classList.add('card__flip-back');
-        }
+            (face as HTMLElement).classList.add('card__flip-face');
+            (back as HTMLElement).classList.add('card__flip-back');
+        });
+        // {
+        //     const face = card.querySelector('.card__face') as HTMLElement;
+        //     const back = card.querySelector('.card__back');
+
+        //     face.classList.add('card__flip-face');
+        //     back.classList.add('card__flip-back');
+        // }
         return this;
     }
 }

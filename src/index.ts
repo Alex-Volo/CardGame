@@ -1,5 +1,4 @@
-/* eslint-disable no-case-declarations */
-import { renderGameField } from './components/game.js';
+import { renderGameField } from './components/game';
 require('./css/style.css');
 import './img/back.png';
 import looseImg from './img/loose.png';
@@ -31,7 +30,11 @@ const winOrLooseUrl = {
     проиграли: looseImg,
 };
 
-export function renderApp(mode = '0', timerValue = 0, resultWord = 'выиграли'): void {
+export function renderApp(
+    mode = '0',
+    timerValue: string | null = '0',
+    resultWord = 'выиграли'
+): void {
     switch (mode) {
         default:
             appElem.innerHTML = `
@@ -62,7 +65,6 @@ export function renderApp(mode = '0', timerValue = 0, resultWord = 'выигра
                 <div class="game__field">
                 </div>
             </div>
-            <p>Сложность ${window.cardGame.difficulty}</p>
             <button class="btn back_btn">Назад</button>
             `;
 
@@ -91,12 +93,11 @@ function addListenerOnApp() {
         const difficultyButtons = Array.from(
             appElem.querySelectorAll('button.difficulty__selection-item')
         );
-        console.log(difficultyButtons);
         const startBtn = appElem.querySelector('.start-button');
         const backBtn = appElem.querySelector('.back_btn');
         const againBtn = appElem.querySelector('.again_btn');
         const resultAgainBtn = appElem.querySelector('.result__again-btn');
-        // if (!event.target) return;
+
         let target = event.target as HTMLElement;
         switch (true) {
             // Кнопки на сложность
@@ -113,9 +114,7 @@ function addListenerOnApp() {
                     });
                 }
 
-                target.classList.add(
-                    'difficulty__selection-item_checked'
-                );
+                target.classList.add('difficulty__selection-item_checked');
                 window.cardGame.difficulty = target.textContent;
                 break;
             // Кнопка старт

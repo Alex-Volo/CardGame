@@ -11,7 +11,7 @@
         "lint:js": "eslint ./src/**/*.js --fix",
         "lint:ts": "tsc --noEmit",
         "format": "prettier --write .",
-        "lint": "npm run lint:js && npm run lint:css && npm run lint:ts"
+        "lint": "npm run lint:css && npm run lint:ts"
     },
     "author": "Alex-Volo",
     "license": "ISC",
