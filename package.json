@@ -9,8 +9,9 @@
         "prepare": "husky install",
         "lint:css": "stylelint ./src/css/**/*.css --fix",
         "lint:js": "eslint ./src/**/*.js --fix",
+        "lint:ts": "tsc --noEmit",
         "format": "prettier --write .",
-        "lint": "npm run lint:js && npm run lint:css"
+        "lint": "npm run lint:css && npm run lint:ts"
     },
     "author": "Alex-Volo",
     "license": "ISC",
@@ -30,6 +31,8 @@
         "stylelint-config-standard": "^25.0.0",
         "stylelint-prettier": "^3.0.0",
         "stylelint-scss": "^5.0.0",
+        "ts-loader": "^9.4.2",
+        "typescript": "^5.0.4",
         "webpack": "^5.83.1",
         "webpack-cli": "^5.1.1",
         "webpack-dev-server": "^4.15.0"

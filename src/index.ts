@@ -1,26 +1,42 @@
-/* eslint-disable no-case-declarations */
-import { renderGameField } from './components/game.js';
+// Если у вас стала болеть голова, не волнуйтесь, возможно, это растет мозг.
+
+import { renderGameField } from './components/game';
 require('./css/style.css');
 import './img/back.png';
 import looseImg from './img/loose.png';
 import winImg from './img/win.png';
 
+declare global {
+    interface Window {
+        cardGame: any;
+    }
+}
+
 window.cardGame = {};
-window.cardGame.firstCard = {
-    value: 0,
-    suit: 0,
+window.cardGame = {
+    firstCard: {
+        value: '0',
+        suit: '0',
+    },
+    secondCard: {
+        value: '0',
+        suit: '0',
+    },
+    difficulty: 1,
+    status: 'difficulty',
 };
-window.cardGame.secondCard = {
-    value: 0,
-    suit: 0,
-};
-const appElem = document.querySelector('.app-container');
+
+const appElem = document.querySelector('.app-container') as HTMLElement;
 const winOrLooseUrl = {
     выиграли: winImg,
     проиграли: looseImg,
 };
 
-export function renderApp(mode = 0, timerValue = 0, resultWord) {
+export function renderApp(
+    mode = '0',
+    timerValue: string | null = '0',
+    resultWord = 'выиграли'
+): void {
     switch (mode) {
         default:
             appElem.innerHTML = `
@@ -51,7 +67,6 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
                 <div class="game__field">
                 </div>
             </div>
-            <p>Сложность ${window.cardGame.difficulty}</p>
             <button class="btn back_btn">Назад</button>
             `;
 
@@ -76,19 +91,20 @@ export function renderApp(mode = 0, timerValue = 0, resultWord) {
 }
 // Делегирую события на один листенер
 function addListenerOnApp() {
-    appElem.addEventListener('click', (event) => {
-        const difficultyButtons = appElem.querySelectorAll(
-            '.difficulty__selection-item'
+    appElem.addEventListener('click', (event: MouseEvent): void => {
+        const difficultyButtons = Array.from(
+            appElem.querySelectorAll('button.difficulty__selection-item')
         );
         const startBtn = appElem.querySelector('.start-button');
         const backBtn = appElem.querySelector('.back_btn');
         const againBtn = appElem.querySelector('.again_btn');
         const resultAgainBtn = appElem.querySelector('.result__again-btn');
 
+        const target = event.target as HTMLElement;
         switch (true) {
             // Кнопки на сложность
-            case event.target.classList.contains('difficulty__selection-item'):
-                window.cardGame.difficulty = '1';
+            case target.classList.contains('difficulty__selection-item'):
+                window.cardGame.difficulty = 1;
 
                 for (let button of difficultyButtons) {
                     button.addEventListener('click', () => {
@@ -100,33 +116,23 @@ function addListenerOnApp() {
                     });
                 }
 
-                event.target.classList.add(
-                    'difficulty__selection-item_checked'
-                );
-                window.cardGame.difficulty = event.target.textContent;
+                target.classList.add('difficulty__selection-item_checked');
+                window.cardGame.difficulty = target.textContent;
                 break;
-            // Кнопка старт
-            case event.target === startBtn:
+            // Кнопка старт || Кнопка начать заново
+            case target === startBtn || target === againBtn:
                 window.cardGame.status = 'game';
-                renderApp(window.cardGame.status);
-                break;
-            // Кнопка назад
-            case event.target === backBtn:
-                window.cardGame.status = null;
-                renderApp(window.cardGame.status);
-                break;
-            // Кнопка начать заново
-            case event.target === againBtn:
                 window.cardGame.firstCard = {
-                    value: 0,
-                    suit: 0,
+                    value: '0',
+                    suit: '0',
                 };
                 renderApp(window.cardGame.status);
                 break;
-            // Кнопка начать заново на результате игры
-            case event.target === resultAgainBtn:
+            // Кнопка назад || Кнопка начать заново на результате игры
+            case target === backBtn || target === resultAgainBtn:
                 window.cardGame.status = null;
                 renderApp(window.cardGame.status);
+                break;
         }
     });
 }
