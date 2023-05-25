@@ -1,5 +1,6 @@
 {
     "name": "cardgame",
+    "type": "module",
     "version": "1.0.0",
     "description": "The game of remembering a pair of cards ### GitHubPages - https://alex-volo.github.io/CardGame/",
     "main": "index.js",
@@ -23,6 +24,7 @@
         "eslint-plugin-prettier": "^4.2.1",
         "html-webpack-plugin": "^5.5.1",
         "husky": "^8.0.3",
+        "jest": "^29.5.0",
         "mini-css-extract-plugin": "^2.7.5",
         "prettier": "^2.0.0",
         "style-loader": "^3.3.2",
