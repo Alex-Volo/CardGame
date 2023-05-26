@@ -16,7 +16,8 @@
     },
     "jest": {
         "transform": {
-            "^.+\\.(ts|tsx)$": "babel-jest"
+            "^.+\\.(js|ts|tsx)$": "babel-jest",
+            "^.+\\.svg$": "<rootDir>/svgTransform.js"
         },
         "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
         "moduleFileExtensions": [
