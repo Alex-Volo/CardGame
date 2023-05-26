@@ -1,6 +1,5 @@
 {
     "name": "cardgame",
-    "type": "module",
     "version": "1.0.0",
     "description": "The game of remembering a pair of cards ### GitHubPages - https://alex-volo.github.io/CardGame/",
     "main": "index.js",
@@ -17,11 +16,18 @@
     },
     "jest": {
         "transform": {
-          "^.+\\.(ts|tsx)$": "babel-jest"
+            "^.+\\.(ts|tsx)$": "babel-jest"
         },
         "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
-        "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
-      },
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ]
+    },
     "author": "Alex-Volo",
     "license": "ISC",
     "devDependencies": {
