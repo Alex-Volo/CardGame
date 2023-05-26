@@ -101,4 +101,3 @@ export class Deck {
         return this;
     }
 }
-module.exports = { Deck };

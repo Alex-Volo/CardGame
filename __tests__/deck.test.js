@@ -1,5 +1,6 @@
-import * as assert from 'assert';
-import { Deck } from './deck.ts';
+// import * as assert from 'assert';
+const assert = require("assert").strict;
+import { Deck } from '../src/components/deck.js';
 test('Deck', () => {
     
 })

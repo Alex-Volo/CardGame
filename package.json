@@ -15,9 +15,20 @@
         "lint": "npm run lint:css && npm run lint:ts",
         "test": "jest"
     },
+    "jest": {
+        "transform": {
+          "^.+\\.(ts|tsx)$": "babel-jest"
+        },
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
+        "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+      },
     "author": "Alex-Volo",
     "license": "ISC",
     "devDependencies": {
+        "@babel/preset-env": "^7.21.5",
+        "@babel/preset-typescript": "^7.21.5",
+        "@types/jest": "^29.5.1",
+        "babel-jest": "^29.5.0",
         "css-loader": "^6.7.3",
         "css-minimizer-webpack-plugin": "^5.0.0",
         "eslint": "^8.40.0",
@@ -34,6 +45,7 @@
         "stylelint-config-standard": "^25.0.0",
         "stylelint-prettier": "^3.0.0",
         "stylelint-scss": "^5.0.0",
+        "ts-jest": "^29.1.0",
         "ts-loader": "^9.4.2",
         "typescript": "^5.0.4",
         "webpack": "^5.83.1",
