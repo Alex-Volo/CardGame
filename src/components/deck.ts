@@ -77,7 +77,7 @@ export class Deck {
         return this;
     }
 
-    prepare(difficulty) {
+    prepare(difficulty: number) {
         return this.shuffle().cut(difficulty).double().shuffle();
     }
 
@@ -101,3 +101,4 @@ export class Deck {
         return this;
     }
 }
+module.exports = { Deck };
