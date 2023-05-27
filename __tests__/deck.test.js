@@ -31,14 +31,42 @@ describe('Deck', () => {
     });
 
     describe('shuffle', () => {
-        it('should not equal itself', () => {
+        it('should not equal itself(it will be failed 1/36)', () => {
             // Prepare
-            const expected = 36;
+            const controlDeck = new Deck();
             // Action
             const deck = new Deck();
             const result = deck.shuffle();
             // Compare
-            expect(result).toBe(expected);
+            expect(controlDeck.cards[0]).not.toEqual(result.cards[0]);
+        });
+    });
+
+    describe('cut', () => {
+        it('should have the required length ', () => {
+            // Prepare
+            let requiredLength = 1;
+
+            // Action
+            for(requiredLength; requiredLength < 4; requiredLength++) {
+            const deck = new Deck();
+            const result = deck.cut(requiredLength);
+            // Compare
+            expect(result.cards).toHaveLength(requiredLength * 3);
+            }
+        });
+    });
+
+    describe('double', () => {
+        it('should have twice the number of cards', () => {
+            // Prepare
+            const deck = new Deck();
+            const expected = deck.cards.length * 2;
+            // Action
+            
+            const result = deck.double();
+            // Compare
+            expect(deck.cards).toHaveLength(expected);
         });
     });
 });
