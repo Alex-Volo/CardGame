@@ -106,7 +106,7 @@ function addListenerOnApp() {
             case target.classList.contains('difficulty__selection-item'):
                 window.cardGame.difficulty = 1;
 
-                for (let button of difficultyButtons) {
+                for (const button of difficultyButtons) {
                     button.addEventListener('click', () => {
                         difficultyButtons.forEach((el) =>
                             el.classList.remove(

@@ -2,7 +2,7 @@ import { Deck } from './deck';
 import { renderApp } from '../index';
 
 let countOpenedCards = 0;
-let newdeck = new Deck();
+const newdeck = new Deck();
 console.log(newdeck);
 export function renderGameField(difficulty = 1) {
     const gameField = document.querySelector('.game__field') as HTMLElement;
@@ -23,7 +23,7 @@ export function renderGameField(difficulty = 1) {
 function addCardListener() {
     const cards = Array.from(document.body.querySelectorAll('.card'));
 
-    for (let card of cards) {
+    for (const card of cards) {
         card.addEventListener('click', compareCards);
     }
 
