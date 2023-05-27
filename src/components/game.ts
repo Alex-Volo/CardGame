@@ -2,7 +2,7 @@ import { Deck } from './deck';
 import { renderApp } from '../index';
 
 let countOpenedCards = 0;
-let newdeck = new Deck;
+let newdeck = new Deck();
 console.log(newdeck);
 export function renderGameField(difficulty = 1) {
     const gameField = document.querySelector('.game__field') as HTMLElement;
