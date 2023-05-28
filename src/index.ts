@@ -1,7 +1,7 @@
 // Если у вас стала болеть голова, не волнуйтесь, возможно, это растет мозг.
 
 import { renderGameField } from './components/game';
-require('./css/style.css');
+import './css/style.css';
 import './img/back.png';
 import looseImg from './img/loose.png';
 import winImg from './img/win.png';
@@ -74,9 +74,9 @@ export function renderApp(
             break;
 
         case 'result':
-            appElem.innerHTML =
-                appElem.innerHTML +
-                `<div class="shadow"></div>
+            appElem.innerHTML += `
+                <div class="shadow">
+                </div>
                 <div class="difficulty result">
                     <img src="${winOrLooseUrl[resultWord]}" alt="result" class="result__img">
                     <h1 class="result__heading">Вы ${resultWord}!</h1>
@@ -106,7 +106,7 @@ function addListenerOnApp() {
             case target.classList.contains('difficulty__selection-item'):
                 window.cardGame.difficulty = 1;
 
-                for (let button of difficultyButtons) {
+                for (const button of difficultyButtons) {
                     button.addEventListener('click', () => {
                         difficultyButtons.forEach((el) =>
                             el.classList.remove(
